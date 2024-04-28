@@ -11,7 +11,7 @@ type WrapperProps = {
 const Wrapper = ({ tracksForArtist, title }: WrapperProps) => {
 	return (
 		<div>
-			<p className="text-lg font-bold">{title}:</p>
+			<p className="text-xl font-bold">{title}:</p>
 			<TrackList tracks={tracksForArtist.tracks} />
 		</div>
 	);

@@ -1,6 +1,50 @@
 import { v4 as uuidv4 } from "uuid";
+import { ReactNode } from "react";
 import { TracksSortedByAlbum } from "@/types";
 import TrackList from "./TrackList";
+
+type WrapperProps = {
+	tracksForAlbum: TracksSortedByAlbum[number];
+	title: ReactNode;
+};
+
+const Wrapper = ({ tracksForAlbum, title }: WrapperProps) => {
+	return (
+		<div>
+			<p className="text-xl font-bold">{title}:</p>
+			{!!tracksForAlbum.album.artists?.length && (
+				<p className="font-bold">
+					{`Artist${tracksForAlbum.album.artists.length > 1 ? "s" : ""}: `}
+					{tracksForAlbum.album.artists.map((artist, i) => {
+						const isLastArtist =
+							!!tracksForAlbum.album.artists &&
+							i === tracksForAlbum.album.artists.length - 1;
+
+						return (
+							<span key={uuidv4()}>
+								<span>
+									{!!artist.external_urls.spotify ? (
+										<a
+											href={artist.external_urls.spotify}
+											target="_blank"
+											referrerPolicy="no-referrer"
+										>
+											{artist.name}
+										</a>
+									) : (
+										artist.name
+									)}
+								</span>
+								{!isLastArtist && ", "}
+							</span>
+						);
+					})}
+				</p>
+			)}
+			<TrackList tracks={tracksForAlbum.tracks} />
+		</div>
+	);
+};
 
 type TracksSortedByAlbumListProps = {
 	tracksSortedByAlbum: TracksSortedByAlbum;
@@ -11,27 +55,50 @@ const TracksSortedByAlbumList = ({
 }: TracksSortedByAlbumListProps) => {
 	return (
 		<>
-			{tracksSortedByAlbum.map((tracksForAlbum) => (
-				<div key={uuidv4()}>
-					<p className="text-xl font-bold">
-						{!!tracksForAlbum.album.name
-							? `${tracksForAlbum.album.name} with ${
-									tracksForAlbum.tracks.length
-							  } track${tracksForAlbum.tracks.length > 1 ? "s" : ""}:`
-							: "(no album)"}
-					</p>
-					{!!tracksForAlbum.album.artists && (
-						<p className="font-bold">
-							{`Artist${
-								tracksForAlbum.album.artists.length > 1 ? "s" : ""
-							}: ${tracksForAlbum.album.artists
-								.map((artist) => artist.name)
-								.join(", ")}`}
-						</p>
-					)}
-					<TrackList tracks={tracksForAlbum.tracks} />
-				</div>
-			))}
+			{tracksSortedByAlbum.map((tracksForAlbum) => {
+				if (!tracksForAlbum.album.name) {
+					return (
+						<Wrapper
+							key={uuidv4()}
+							tracksForAlbum={tracksForAlbum}
+							title={"(no album)"}
+						/>
+					);
+				}
+
+				if (!tracksForAlbum.album.external_urls.spotify) {
+					return (
+						<Wrapper
+							key={uuidv4()}
+							tracksForAlbum={tracksForAlbum}
+							title={`${tracksForAlbum.album.name} with ${
+								tracksForAlbum.tracks.length
+							} track${tracksForAlbum.tracks.length > 1 ? "s" : ""}`}
+						/>
+					);
+				}
+
+				return (
+					<Wrapper
+						key={uuidv4()}
+						tracksForAlbum={tracksForAlbum}
+						title={
+							<>
+								<a
+									href={tracksForAlbum.album.external_urls.spotify}
+									target="_blank"
+									referrerPolicy="no-referrer"
+								>
+									{tracksForAlbum.album.name}
+								</a>{" "}
+								{`with ${tracksForAlbum.tracks.length} track${
+									tracksForAlbum.tracks.length > 1 ? "s" : ""
+								}`}
+							</>
+						}
+					/>
+				);
+			})}
 		</>
 	);
 };
