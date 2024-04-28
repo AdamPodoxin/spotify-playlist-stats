@@ -15,10 +15,6 @@ const HomePage = () => {
 
 	const accessToken = searchParams.get("access_token");
 
-	if (!accessToken) {
-		router.push("/login");
-	}
-
 	const { tracks, getTracks } = useGetTracks({
 		accessToken: accessToken!,
 		playlistId,
@@ -39,6 +35,12 @@ const HomePage = () => {
 
 		return sortTracksByAlbum(tracks);
 	}, [tracks]);
+
+	if (!accessToken) {
+		router.push("/login");
+
+		return <></>;
+	}
 
 	return (
 		<>
