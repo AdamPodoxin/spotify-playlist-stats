@@ -24,3 +24,7 @@ export type Track = {
 
 export type TracksSortedByArtist = ReturnType<typeof sortTracksByArtist>;
 export type TracksSortedByAlbum = ReturnType<typeof sortTracksByAlbum>;
+
+export type User = {
+	id: string;
+};

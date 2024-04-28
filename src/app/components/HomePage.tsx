@@ -6,6 +6,7 @@ import useGetTracks from "@/hooks/useGetTracks";
 import { sortTracksByAlbum, sortTracksByArtist } from "@/utils/tracksUtil";
 import TracksSortedByArtistList from "./TracksSortedByArtistList";
 import TracksSortedByAlbumList from "./TracksSortedByAlbumList";
+import PlaylistPicker from "./PlaylistPicker";
 
 const HomePage = () => {
 	const searchParams = useSearchParams();
@@ -44,12 +45,10 @@ const HomePage = () => {
 
 	return (
 		<>
-			<input
-				className="text-black p-2 rounded-lg"
-				name="playlist-id"
-				placeholder="Playlist ID"
-				value={playlistId}
-				onChange={(e) => setPlaylistId(e.target.value)}
+			<PlaylistPicker
+				playlistId={playlistId}
+				setPlaylistId={setPlaylistId}
+				accessToken={accessToken}
 			/>
 			<button
 				className="bg-white text-black text-lg py-2 px-4 rounded-lg"

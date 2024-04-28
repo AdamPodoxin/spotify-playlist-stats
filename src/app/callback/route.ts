@@ -26,7 +26,6 @@ export const GET = async (request: NextRequest) => {
 			)}`,
 		},
 		body: body,
-		mode: "no-cors",
 	});
 
 	if (!res.ok) {

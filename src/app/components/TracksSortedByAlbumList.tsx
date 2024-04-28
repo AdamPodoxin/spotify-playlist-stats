@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { ReactNode } from "react";
-import { TracksSortedByAlbum } from "@/types";
+import type { TracksSortedByAlbum } from "@/types";
 import TrackList from "./TrackList";
 
 type WrapperProps = {

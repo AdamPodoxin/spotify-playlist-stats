@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { type Track } from "@/types";
+import type { User, Track } from "@/types";
 import useFetch from "./useFetch";
 
 type PlaylistTrack = {
 	track: Track;
+	owner: User;
 };
 
 type PlaylistTracksResponse = {
@@ -53,7 +54,7 @@ const useGetTracks = ({ playlistId, accessToken }: UseGetTracksProps) => {
 
 		while (tracks.length < playlistData.total) {
 			const queryParams = new URLSearchParams({
-				limit: "100",
+				limit: "50",
 				offset: `${offset}`,
 			});
 

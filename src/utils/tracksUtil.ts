@@ -1,4 +1,4 @@
-import { Album, Artist, Track } from "@/types";
+import type { Album, Artist, Track } from "@/types";
 
 export const sortTracksByArtist = (tracks: Track[]) => {
 	const artists: Artist[] = [];
