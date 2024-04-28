@@ -14,8 +14,8 @@ const TracksSortedByArtistList = ({
 			{tracksSortedByArtist.map((tracksForArtist) => (
 				<div key={uuidv4()}>
 					<p className="text-lg font-bold">
-						{!!tracksForArtist.artistName
-							? `${tracksForArtist.artistName} with ${
+						{!!tracksForArtist.artist.name
+							? `${tracksForArtist.artist.name} with ${
 									tracksForArtist.tracks.length
 							  } track${tracksForArtist.tracks.length > 1 ? "s" : ""}:`
 							: "(no artist)"}
