@@ -56,9 +56,9 @@ const HomePage = () => {
 				Get playlist stats
 			</button>
 
-			<div className="flex">
+			<div className="flex justify-center">
 				{tracksSortedByArtist && (
-					<div className="flex flex-col gap-8 m-8">
+					<div className="flex-1 flex flex-col gap-8 m-8">
 						<TracksSortedByArtistList
 							tracksSortedByArtist={tracksSortedByArtist}
 						/>
@@ -66,7 +66,7 @@ const HomePage = () => {
 				)}
 
 				{tracksSortedByAlbum && (
-					<div className="flex flex-col gap-8 m-8">
+					<div className="flex-1 flex flex-col gap-8 m-8">
 						<TracksSortedByAlbumList
 							tracksSortedByAlbum={tracksSortedByAlbum}
 						/>
