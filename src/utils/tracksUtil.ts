@@ -19,10 +19,10 @@ export const sortTracksByArtist = (tracks: Track[]) => {
 	});
 
 	artists.sort((artist1, artist2) => {
-		if (!artist1) {
+		if (!artist1.name) {
 			return Number.MAX_SAFE_INTEGER;
 		}
-		if (!artist2) {
+		if (!artist2.name) {
 			return Number.MIN_SAFE_INTEGER;
 		}
 
