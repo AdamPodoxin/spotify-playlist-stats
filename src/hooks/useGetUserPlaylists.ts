@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { User } from "@/types";
 import useFetch from "./useFetch";
 
 type PlaylistImage = {
@@ -12,7 +11,6 @@ type Playlist = {
 	id: string;
 	name: string;
 	images: PlaylistImage[];
-	owner: User;
 };
 
 type UserPlaylistsResponse = {
@@ -22,7 +20,6 @@ type UserPlaylistsResponse = {
 	items: Playlist[];
 };
 
-const usersBaseUrl = "https://api.spotify.com/v1/me";
 const userPlaylistsBaseUrl = "https://api.spotify.com/v1/me/playlists";
 
 const useGetUserPlaylists = () => {
@@ -30,28 +27,19 @@ const useGetUserPlaylists = () => {
 
 	const [userPlaylists, setUserPlaylists] = useState<Playlist[]>([]);
 
-	const fetchUser = async (accessToken: string) => {
-		const res = await fetchWrapper(usersBaseUrl, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-
-		if (!res.ok) {
-			return null;
-		}
-
-		const userData = (await res.json()) as User;
-
-		return userData;
-	};
-
 	const fetchUserPlaylists = async (accessToken: string) => {
-		const res = await fetchWrapper(userPlaylistsBaseUrl, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
+		const queryParams = new URLSearchParams({
+			limit: "50",
 		});
+
+		const res = await fetchWrapper(
+			`${userPlaylistsBaseUrl}?${queryParams.toString()}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
 
 		if (!res.ok) {
 			return [];
@@ -59,8 +47,12 @@ const useGetUserPlaylists = () => {
 
 		const userPlaylistsData = (await res.json()) as UserPlaylistsResponse;
 
-		let userPlaylists: Playlist[] = [];
-		userPlaylists = userPlaylists.concat(userPlaylistsData.items);
+		const userPlaylists: Playlist[] = [];
+		userPlaylistsData.items.forEach((item) => {
+			if (!userPlaylists.some((p) => p.id === item.id)) {
+				userPlaylists.push(item);
+			}
+		});
 
 		let offset = userPlaylistsData.items.length;
 
@@ -84,7 +76,11 @@ const useGetUserPlaylists = () => {
 			}
 
 			const userPlaylistsData = (await res.json()) as UserPlaylistsResponse;
-			userPlaylists = userPlaylists.concat(userPlaylistsData.items);
+			userPlaylistsData.items.forEach((item) => {
+				if (!userPlaylists.some((p) => p.id === item.id)) {
+					userPlaylists.push(item);
+				}
+			});
 
 			offset += userPlaylistsData.items.length;
 		}
@@ -93,12 +89,8 @@ const useGetUserPlaylists = () => {
 	};
 
 	const getUserPlaylists = async (accessToken: string) => {
-		const user = await fetchUser(accessToken);
 		const userPlaylists = await fetchUserPlaylists(accessToken);
-
-		if (user) {
-			setUserPlaylists(userPlaylists.filter((p) => p.owner.id === user.id));
-		}
+		setUserPlaylists(userPlaylists);
 	};
 
 	return {
