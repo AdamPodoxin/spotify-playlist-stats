@@ -1,5 +1,8 @@
+import { sortTracksByArtist } from "./utils/tracksUtil";
+
 export type Album = {
 	name: string;
+	artists: Artist[] | undefined;
 };
 
 export type Artist = {
@@ -14,3 +17,5 @@ export type Track = {
 		spotify: string | undefined;
 	};
 };
+
+export type TracksSortedByArtist = ReturnType<typeof sortTracksByArtist>;
