@@ -55,6 +55,8 @@ const TracksSortedByAlbumList = ({
 }: TracksSortedByAlbumListProps) => {
 	return (
 		<>
+			<p className="font-bold text-2xl">Tracks sorted by album</p>
+
 			{tracksSortedByAlbum.map((tracksForAlbum) => {
 				if (!tracksForAlbum.album.name) {
 					return (

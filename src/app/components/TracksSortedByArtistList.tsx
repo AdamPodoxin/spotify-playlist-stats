@@ -26,6 +26,7 @@ const TracksSortedByArtistList = ({
 }: TracksSortedByArtistListProps) => {
 	return (
 		<>
+			<p className="font-bold text-2xl">Tracks sorted by artist</p>
 			{tracksSortedByArtist.map((tracksForArtist) => {
 				if (!tracksForArtist.artist.name) {
 					return (
