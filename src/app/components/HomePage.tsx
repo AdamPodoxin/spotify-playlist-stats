@@ -3,8 +3,9 @@
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useGetTracks from "@/hooks/useGetTracks";
-import { sortTracksByArtist } from "@/utils/tracksUtil";
+import { sortTracksByAlbum, sortTracksByArtist } from "@/utils/tracksUtil";
 import TracksSortedByArtistList from "./TracksSortedByArtistList";
+import TracksSortedByAlbumList from "./TracksSortedByAlbumList";
 
 const HomePage = () => {
 	const searchParams = useSearchParams();
@@ -31,6 +32,14 @@ const HomePage = () => {
 		return sortTracksByArtist(tracks);
 	}, [tracks]);
 
+	const tracksSortedByAlbum = useMemo(() => {
+		if (tracks.length <= 0) {
+			return [];
+		}
+
+		return sortTracksByAlbum(tracks);
+	}, [tracks]);
+
 	return (
 		<>
 			<input
@@ -47,13 +56,23 @@ const HomePage = () => {
 				Get playlist stats
 			</button>
 
-			{tracksSortedByArtist && (
-				<div className="flex flex-col gap-8 m-8">
-					<TracksSortedByArtistList
-						tracksSortedByArtist={tracksSortedByArtist}
-					/>
-				</div>
-			)}
+			<div className="flex">
+				{tracksSortedByArtist && (
+					<div className="flex flex-col gap-8 m-8">
+						<TracksSortedByArtistList
+							tracksSortedByArtist={tracksSortedByArtist}
+						/>
+					</div>
+				)}
+
+				{tracksSortedByAlbum && (
+					<div className="flex flex-col gap-8 m-8">
+						<TracksSortedByAlbumList
+							tracksSortedByAlbum={tracksSortedByAlbum}
+						/>
+					</div>
+				)}
+			</div>
 		</>
 	);
 };

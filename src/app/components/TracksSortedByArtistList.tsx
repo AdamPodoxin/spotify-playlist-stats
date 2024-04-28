@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { TracksSortedByArtist } from "@/types";
+import TrackList from "./TrackList";
 
 type TracksSortedByArtistListProps = {
 	tracksSortedByArtist: TracksSortedByArtist;
@@ -19,21 +20,7 @@ const TracksSortedByArtistList = ({
 							  } track${tracksForArtist.tracks.length > 1 ? "s" : ""}:`
 							: "(no artist)"}
 					</p>
-					{tracksForArtist.tracks.map((track) => (
-						<p key={uuidv4()}>
-							{!!track.external_urls.spotify ? (
-								<a
-									href={track.external_urls.spotify}
-									target="_blank"
-									referrerPolicy="no-referrer"
-								>
-									{track.name}
-								</a>
-							) : (
-								track.name
-							)}
-						</p>
-					))}
+					<TrackList tracks={tracksForArtist.tracks} />
 				</div>
 			))}
 		</>

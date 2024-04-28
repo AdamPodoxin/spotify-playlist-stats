@@ -1,4 +1,4 @@
-import { Track } from "@/types";
+import { Album, Track } from "@/types";
 
 export const sortTracksByArtist = (tracks: Track[]) => {
 	const artistNames: string[] = [];
@@ -37,5 +37,45 @@ export const sortTracksByArtist = (tracks: Track[]) => {
 	return artistNames.map((artistName) => ({
 		artistName,
 		tracks: tracksForArtistMap.get(artistName) ?? [],
+	}));
+};
+
+export const sortTracksByAlbum = (tracks: Track[]) => {
+	const albums: Album[] = [];
+	const tracksForAlbumMap = new Map<string, Track[]>();
+
+	tracks.forEach((track) => {
+		if (track.album) {
+			if (!albums.some((album) => album.name === track.album?.name)) {
+				albums.push(track.album);
+				tracksForAlbumMap.set(track.album.name, []);
+			}
+
+			const tracksForAlbum = tracksForAlbumMap.get(track.album.name);
+			if (tracksForAlbum) {
+				tracksForAlbum.push(track);
+			}
+		}
+	});
+
+	albums.sort((album1, album2) => {
+		if (!album1.name) {
+			return Number.MAX_SAFE_INTEGER;
+		}
+		if (!album2.name) {
+			return Number.MIN_SAFE_INTEGER;
+		}
+
+		const numberOfTracksForAlbum1 =
+			tracksForAlbumMap.get(album1.name)?.length ?? 0;
+		const numberOfTracksForAlbum2 =
+			tracksForAlbumMap.get(album2.name)?.length ?? 0;
+
+		return numberOfTracksForAlbum2 - numberOfTracksForAlbum1;
+	});
+
+	return albums.map((album) => ({
+		album,
+		tracks: tracksForAlbumMap.get(album.name) ?? [],
 	}));
 };

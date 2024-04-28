@@ -1,4 +1,4 @@
-import { sortTracksByArtist } from "./utils/tracksUtil";
+import { sortTracksByAlbum, sortTracksByArtist } from "./utils/tracksUtil";
 
 export type Album = {
 	name: string;
@@ -19,3 +19,4 @@ export type Track = {
 };
 
 export type TracksSortedByArtist = ReturnType<typeof sortTracksByArtist>;
+export type TracksSortedByAlbum = ReturnType<typeof sortTracksByAlbum>;
