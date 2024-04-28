@@ -20,11 +20,11 @@ const PlaylistPicker = ({
 		if (accessToken) {
 			void getUserPlaylists(accessToken);
 		}
-	}, [accessToken, getUserPlaylists]);
+	}, [accessToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
-			<div className="flex flex-wrap gap-16">
+			<div className="flex flex-wrap items-center justify-center gap-16">
 				{userPlaylists.map((playlist) => {
 					return (
 						<div
