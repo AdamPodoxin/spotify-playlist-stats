@@ -32,7 +32,7 @@ export const GET = async (request: NextRequest) => {
 		redirect("/error");
 	}
 
-	var data = await res.json();
+	const data = (await res.json()) as { access_token: string };
 
 	const accessTokenDataParams = new URLSearchParams({
 		access_token: data.access_token,

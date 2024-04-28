@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import type { TracksSortedByAlbum } from "@/types";
 import TrackList from "./TrackList";
 

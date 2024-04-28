@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, type SetStateAction } from "react";
+import Image from "next/image";
 import useGetUserPlaylists from "@/hooks/useGetUserPlaylists";
 
 type PlaylistPickerProps = {
@@ -17,9 +18,9 @@ const PlaylistPicker = ({
 
 	useEffect(() => {
 		if (accessToken) {
-			getUserPlaylists(accessToken);
+			void getUserPlaylists(accessToken);
 		}
-	}, [accessToken]);
+	}, [accessToken, getUserPlaylists]);
 
 	return (
 		<>
@@ -32,7 +33,12 @@ const PlaylistPicker = ({
 							onClick={() => setPlaylistId(playlist.id)}
 						>
 							{playlist.images.length && (
-								<img src={playlist.images[0].url} width={200} height={200} />
+								<Image
+									src={playlist.images[0].url}
+									width={200}
+									height={200}
+									alt={playlist.name}
+								/>
 							)}
 							<span className="text-white font-bold text-xl">
 								{playlist.name}

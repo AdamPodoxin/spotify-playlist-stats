@@ -1,4 +1,4 @@
-import { sortTracksByAlbum, sortTracksByArtist } from "./utils/tracksUtil";
+import type { sortTracksByAlbum, sortTracksByArtist } from "./utils/tracksUtil";
 
 type ExternalUrls = {
 	spotify: string | undefined;
