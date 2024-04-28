@@ -1,10 +1,12 @@
 export const spotify = {
 	credentials: {
-		clientId: "a3211d8707c040c3941f4db2293b1b01",
-		clientSecret: "d5955a47b1a544e795fb35fda80084fd",
+		clientId: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID!,
+		clientSecret: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET!,
 	},
 
 	stateKey: "spotify_auth_state",
 
 	scope: "playlist-read-private",
+
+	redirectUriBase: process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI_BASE,
 } as const;

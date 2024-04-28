@@ -13,7 +13,7 @@ export const GET = async () => {
 		response_type: "code",
 		client_id: spotify.credentials.clientId,
 		scope: spotify.scope,
-		redirect_uri: "http://localhost:3000/callback",
+		redirect_uri: `${spotify.redirectUriBase}/callback`,
 		state: spotifyStateValue,
 	});
 
