@@ -43,7 +43,7 @@ const PlaylistPicker = ({
 			</div>
 
 			<input
-				className="text-black p-2 rounded-lg"
+				className="text-black p-2 rounded-lg w-full"
 				name="playlist-id"
 				placeholder="Playlist ID"
 				value={playlistId}
