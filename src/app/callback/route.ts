@@ -36,7 +36,6 @@ export const GET = async (request: NextRequest) => {
 
 	const accessTokenDataParams = new URLSearchParams({
 		access_token: data.access_token,
-		refresh_token: data.refresh_token,
 	});
 
 	redirect(`/?${accessTokenDataParams.toString()}`);

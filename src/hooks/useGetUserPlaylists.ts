@@ -30,6 +30,7 @@ const useGetUserPlaylists = () => {
 	const fetchUserPlaylists = async (accessToken: string) => {
 		const queryParams = new URLSearchParams({
 			limit: "50",
+			offset: "0",
 		});
 
 		const res = await fetchWrapper(
@@ -48,15 +49,19 @@ const useGetUserPlaylists = () => {
 		const userPlaylistsData = (await res.json()) as UserPlaylistsResponse;
 
 		const userPlaylists: Playlist[] = [];
+		let numberOfItemsFetched = 0;
+
 		userPlaylistsData.items.forEach((item) => {
 			if (!userPlaylists.some((p) => p.id === item.id)) {
 				userPlaylists.push(item);
 			}
+
+			numberOfItemsFetched++;
 		});
 
 		let offset = userPlaylistsData.items.length;
 
-		while (userPlaylists.length < userPlaylistsData.total) {
+		while (numberOfItemsFetched < userPlaylistsData.total) {
 			const queryParams = new URLSearchParams({
 				limit: "50",
 				offset: `${offset}`,
@@ -80,6 +85,8 @@ const useGetUserPlaylists = () => {
 				if (!userPlaylists.some((p) => p.id === item.id)) {
 					userPlaylists.push(item);
 				}
+
+				numberOfItemsFetched++;
 			});
 
 			offset += userPlaylistsData.items.length;
