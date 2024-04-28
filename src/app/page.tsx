@@ -1,7 +1,11 @@
+import HomePage from "./components/HomePage";
+
 const Home = () => {
 	return (
 		<>
-			<p>Home page</p>
+			<main className="flex min-h-screen flex-col items-center justify-center p-24 gap-4">
+				<HomePage />
+			</main>
 		</>
 	);
 };
