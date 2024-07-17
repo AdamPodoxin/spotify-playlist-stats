@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { type SpotifyTokenResponse } from "~/types";
+import { saveToken } from "~/utils/spotifyToken";
 
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 
@@ -11,7 +12,6 @@ const baseUrl = `http://localhost:3000`;
 
 const fetchToken = async (code: string) => {
   const code_verifier = localStorage.getItem("code_verifier");
-  console.log("code verifier", code_verifier);
 
   const response = await fetch(tokenEndpoint, {
     method: "POST",
@@ -43,16 +43,14 @@ const CallbackPage = () => {
       const token = await fetchToken(code);
 
       if (token) {
-        localStorage.setItem("access_token", token.access_token);
+        saveToken(token);
         router.push(baseUrl);
       }
     };
 
-    console.log("get token");
     const code = searchParams.get("code");
 
     if (code) {
-      console.log("code", code);
       void getToken(code);
     }
   }, [router, searchParams]);

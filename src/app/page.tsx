@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PlaylistSearch from "~/components/PlaylistSearch";
-import { getCurrentToken } from "~/utils/spotifyToken";
+import { clearLocalStorage, getCurrentToken } from "~/utils/spotifyToken";
 
 const HomePage = () => {
   const router = useRouter();
@@ -11,10 +11,7 @@ const HomePage = () => {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("access_token", localStorage.getItem("access_token"));
-
     const currentToken = getCurrentToken();
-    console.log("current token", currentToken);
     if (currentToken.access_token) {
       setToken(currentToken.access_token);
     }
@@ -38,6 +35,15 @@ const HomePage = () => {
       <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
         Spotify Playlist Stats
       </h1>
+      <button
+        className="rounded-lg bg-[#0b0b16] px-4 py-2 text-lg"
+        onClick={() => {
+          clearLocalStorage();
+          location.reload();
+        }}
+      >
+        Logout
+      </button>
       <PlaylistSearch />
     </>
   );

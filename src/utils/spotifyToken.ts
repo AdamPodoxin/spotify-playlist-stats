@@ -20,3 +20,15 @@ export const saveToken = (tokenResponse: SpotifyTokenResponse) => {
   const expiry = new Date(now.getTime() + expires_in * 1000);
   localStorage.setItem("expires", expiry.toString());
 };
+
+export const saveCodeVerifier = (codeVerifier: string) => {
+  window.localStorage.setItem("code_verifier", codeVerifier);
+};
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("expires_in");
+  localStorage.removeItem("expires");
+  localStorage.removeItem("code_verifier");
+};

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { saveCodeVerifier } from "~/utils/spotifyToken";
 
 const scope = "user-read-private user-read-email";
 const redirectUrl = `http://localhost:3000/callback`;
@@ -32,7 +33,7 @@ const LoginPage = () => {
   useEffect(() => {
     const authenticateUser = async () => {
       const codeVerifier = generateRandomString(64);
-      window.localStorage.setItem("code_verifier", codeVerifier);
+      saveCodeVerifier(codeVerifier);
 
       const hashed = await sha256(codeVerifier);
       const codeChallenge = base64encode(hashed);
