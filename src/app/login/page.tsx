@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { saveCodeVerifier } from "~/utils/spotifyToken";
 
 const scope = "user-read-private user-read-email";
-const redirectUrl = `http://localhost:3000/callback`;
 
 const generateRandomString = (length: number) => {
   const possible =
@@ -48,7 +47,7 @@ const LoginPage = () => {
         scope,
         code_challenge_method: "S256",
         code_challenge: codeChallenge,
-        redirect_uri: redirectUrl,
+        redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/callback`,
       }).toString();
 
       router.push(authorizationEndpoint.toString());

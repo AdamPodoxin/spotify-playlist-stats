@@ -22,7 +22,9 @@ const HomePage = () => {
       <div>
         <button
           className="rounded-lg bg-[#0b0b16] px-8 py-4 text-2xl"
-          onClick={() => router.push(`http://localhost:3000/login`)}
+          onClick={() =>
+            router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/login`)
+          }
         >
           Login
         </button>

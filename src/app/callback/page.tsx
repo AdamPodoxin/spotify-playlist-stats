@@ -6,9 +6,7 @@ import { type SpotifyTokenResponse } from "~/types";
 import { saveToken } from "~/utils/spotifyToken";
 
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-
-// TODO: env variable
-const baseUrl = `http://localhost:3000`;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
 
 const fetchToken = async (code: string) => {
   const code_verifier = localStorage.getItem("code_verifier");
