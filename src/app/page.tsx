@@ -1,3 +1,5 @@
+import PlaylistSearch from "~/components/PlaylistSearch";
+
 const HomePage = () => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#242334] to-[#15162c] text-white">
@@ -5,6 +7,7 @@ const HomePage = () => {
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Spotify Playlist Stats
         </h1>
+        <PlaylistSearch />
       </div>
     </main>
   );
