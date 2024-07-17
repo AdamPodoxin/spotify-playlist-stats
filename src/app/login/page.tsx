@@ -3,8 +3,10 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { saveCodeVerifier } from "~/utils/spotifyToken";
+import { env } from "~/env";
 
 const scope = "user-read-private user-read-email";
+const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 const generateRandomString = (length: number) => {
   const possible =
@@ -43,11 +45,11 @@ const LoginPage = () => {
 
       authorizationEndpoint.search = new URLSearchParams({
         response_type: "code",
-        client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID!,
+        client_id: env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
         scope,
         code_challenge_method: "S256",
         code_challenge: codeChallenge,
-        redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/callback`,
+        redirect_uri: `${baseUrl}/callback`,
       }).toString();
 
       router.push(authorizationEndpoint.toString());

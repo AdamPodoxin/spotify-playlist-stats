@@ -3,7 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PlaylistSearch from "~/components/PlaylistSearch";
+import { env } from "~/env";
 import { clearLocalStorage, getCurrentToken } from "~/utils/spotifyToken";
+
+const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 const HomePage = () => {
   const router = useRouter();
@@ -22,9 +25,7 @@ const HomePage = () => {
       <div>
         <button
           className="rounded-lg bg-[#0b0b16] px-8 py-4 text-2xl"
-          onClick={() =>
-            router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/login`)
-          }
+          onClick={() => router.push(`${baseUrl}/login`)}
         >
           Login
         </button>
