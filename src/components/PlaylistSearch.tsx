@@ -1,12 +1,35 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const pathnameRegex = /\/playlist\/([^\/]+)/;
+
 const PlaylistSearch = () => {
+  const router = useRouter();
+
   const [playlistLink, setPlaylistLink] = useState("");
 
   const loadPlaylistStats = () => {
-    console.log(playlistLink);
+    try {
+      const url = new URL(playlistLink);
+
+      if (url.host !== "open.spotify.com") {
+        alert("Please enter a Spotify link");
+        return;
+      }
+
+      const pathname = url.pathname;
+      if (!pathnameRegex.test(pathname)) {
+        alert("Please enter a valid link to a Spotify playlist");
+        return;
+      }
+
+      const playlistId = pathname.split("/")[2];
+      router.push(`/playlist/${playlistId}`);
+    } catch (_) {
+      alert("Please enter a valid link");
+    }
   };
 
   return (
