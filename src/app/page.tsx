@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PlaylistSearch from "~/components/PlaylistSearch";
+import UserPlaylists from "~/components/UserPlaylists";
 import { env } from "~/env";
 import { clearLocalStorage, getCurrentToken } from "~/utils/spotifyToken";
 
@@ -48,6 +49,8 @@ const HomePage = () => {
         Logout
       </button>
       <PlaylistSearch />
+      <p className="text-xl text-[#c2c1cf]">or choose one of your playlists</p>
+      <UserPlaylists />
     </>
   );
 };

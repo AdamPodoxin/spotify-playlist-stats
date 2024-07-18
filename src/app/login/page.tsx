@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { saveCodeVerifier } from "~/utils/spotifyToken";
 import { env } from "~/env";
 
-const scope = "user-read-private user-read-email";
+const scope = "user-read-private user-read-email playlist-read-private";
 const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 const generateRandomString = (length: number) => {

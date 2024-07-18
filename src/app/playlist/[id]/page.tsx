@@ -1,39 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCurrentToken } from "~/utils/spotifyToken";
+import useFetch from "~/hooks/useFetch";
 
 const PlaylistStatsPage = ({ params }: { params: { id: string } }) => {
+  const { fetchAllPagesAuthenticated } = useFetch();
+
   const [playlistData, setPlaylistData] = useState<unknown>(null);
 
   useEffect(() => {
-    const token = getCurrentToken();
-
     const getPlaylistData = async () => {
-      const data = await fetch(
-        `https://api.spotify.com/v1/playlists/${params.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.access_token}`,
-          },
-        },
-      );
-
-      if (!data.ok) {
-        console.error(
-          "Error getting playlist data:",
-          data.status,
-          data.statusText,
+      try {
+        const data = await fetchAllPagesAuthenticated<unknown>(
+          `https://api.spotify.com/v1/playlists/${params.id}/tracks`,
         );
-        return;
-      }
 
-      const json = (await data.json()) as unknown;
-      setPlaylistData(json);
+        setPlaylistData(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     void getPlaylistData();
-  }, [params.id]);
+  }, [params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
