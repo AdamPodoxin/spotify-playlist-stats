@@ -12,6 +12,9 @@ export type Album = {
 export type Artist = {
   id?: string | null;
   name: string;
+  external_urls: {
+    spotify?: string | null;
+  };
 };
 
 export type Track = {
