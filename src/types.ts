@@ -7,6 +7,9 @@ export type SpotifyTokenResponse = {
 export type Album = {
   id?: string | null;
   name?: string | null;
+  external_urls: {
+    spotify?: string | null;
+  };
 };
 
 export type Artist = {

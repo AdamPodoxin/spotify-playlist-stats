@@ -1,41 +1,41 @@
 "use client";
 
 import type { PlaylistItem } from "~/types";
-import useTracksByArtistList from "./useTracksByArtistList";
+import useTracksByAlbumList from "./useTracksByAlbumList";
 
-const TracksByArtistList = ({
+const TracksByAlbumList = ({
   playlistItems,
 }: {
   playlistItems: PlaylistItem[];
 }) => {
-  const { tracksForArtists } = useTracksByArtistList({ playlistItems });
+  const { tracksForAlbums } = useTracksByAlbumList({ playlistItems });
 
   return (
     <div>
-      <span className="my-4 text-2xl">Artists:</span>
+      <span className="my-4 text-2xl">Albums:</span>
       <div className="flex flex-col gap-4">
-        {tracksForArtists.map(([artist, tracks]) => {
-          const artistName = !!artist.name ? artist.name : "(no artist)";
-          const artistUrl = artist.external_urls.spotify;
+        {tracksForAlbums.map(([album, tracks]) => {
+          const albumName = !!album.name ? album.name : "(no album)";
+          const albumUrl = album.external_urls.spotify;
 
           const tracksString = tracks.length > 1 ? "tracks" : "track";
 
           return (
-            <div key={artist.id ?? artist.name} className="flex flex-col">
-              {artistUrl && (
+            <div key={album.id ?? album.name} className="flex flex-col">
+              {albumUrl && (
                 <a
-                  href={artistUrl}
+                  href={albumUrl}
                   target="_blank"
                   referrerPolicy="no-referrer"
                   className="my-1 w-min text-nowrap bg-slate-50/10 text-xl hover:bg-slate-50/20"
                 >
-                  {artistName}
+                  {albumName}
                 </a>
               )}
 
-              {!artistUrl && (
+              {!albumUrl && (
                 <span className="my-1 w-min text-nowrap text-xl">
-                  {artistName}
+                  {albumName}
                 </span>
               )}
 
@@ -49,7 +49,7 @@ const TracksByArtistList = ({
 
                   return (
                     <div
-                      key={`${artist.id ?? artist.name}-${track.id ?? track.name}`}
+                      key={`${album.id ?? album.name}-${track.id ?? track.name}`}
                     >
                       {trackUrl && (
                         <a
@@ -77,4 +77,4 @@ const TracksByArtistList = ({
   );
 };
 
-export default TracksByArtistList;
+export default TracksByAlbumList;
