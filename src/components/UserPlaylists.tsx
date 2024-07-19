@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { env } from "~/env";
 import useFetch from "~/hooks/useFetch";
 
-type UserPlaylistType = {
+type UserPlaylist = {
   id: string;
   name: string;
   images: {
@@ -16,13 +16,13 @@ type UserPlaylistType = {
 const UserPlaylists = () => {
   const { fetchAllPagesAuthenticated } = useFetch();
 
-  const [userPlaylists, setUserPlaylists] = useState<UserPlaylistType[]>([]);
+  const [userPlaylists, setUserPlaylists] = useState<UserPlaylist[]>([]);
 
   useEffect(() => {
     const fetchPlaylists = async () => {
       const getUserPlaylists = async () => {
         try {
-          const data = await fetchAllPagesAuthenticated<UserPlaylistType>(
+          const data = await fetchAllPagesAuthenticated<UserPlaylist>(
             "https://api.spotify.com/v1/me/playlists",
           );
 

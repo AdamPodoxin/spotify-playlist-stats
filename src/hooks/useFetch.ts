@@ -22,6 +22,7 @@ const useFetch = () => {
 
     if (!access_token) {
       router.push(loginUrl);
+      return null;
     }
 
     const authenticatedOptions = {
@@ -36,7 +37,10 @@ const useFetch = () => {
 
     if (response.status === 401) {
       router.push(loginUrl);
-    } else if (!response.ok) {
+      return null;
+    }
+
+    if (!response.ok) {
       throw new Error(`Call failed with status ${response.status}`, {
         cause: response.statusText,
       });
@@ -60,14 +64,20 @@ const useFetch = () => {
         options,
       );
 
-      pages.push(data);
+      if (data) {
+        pages.push(data);
+      }
 
-      const next = data.next;
+      const next = data?.next;
       if (!next) {
         break;
       }
 
       fetchUrl = next;
+    }
+
+    if (pages.length === 0) {
+      return [];
     }
 
     return pages.flatMap((r) => r.items);

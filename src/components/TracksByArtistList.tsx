@@ -58,9 +58,6 @@ const TracksByArtistList = ({
               <p className="mb-2 text-lg">{tracks.length} tracks</p>
               <div className="flex flex-col gap-1">
                 {tracks.map((track) => {
-                  if (!track.external_urls) {
-                    console.log(track.name);
-                  }
                   const spotifyUrl = track.external_urls.spotify;
 
                   return (
