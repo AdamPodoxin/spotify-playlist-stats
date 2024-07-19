@@ -18,6 +18,8 @@ const TracksByArtistList = ({
           const artistName = !!artist.name ? artist.name : "(no artist)";
           const artistUrl = artist.external_urls.spotify;
 
+          const tracksString = tracks.length > 1 ? "tracks" : "track";
+
           return (
             <div key={artist.id ?? artist.name}>
               {artistUrl && (
@@ -33,7 +35,9 @@ const TracksByArtistList = ({
 
               {!artistUrl && <p className="my-1 text-xl">{artistName}</p>}
 
-              <p className="mb-2 text-lg">{tracks.length} tracks</p>
+              <p className="mb-2 text-lg">
+                {tracks.length} {tracksString}
+              </p>
 
               <div className="flex flex-col gap-1">
                 {tracks.map((track) => {
