@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import type { Album, PlaylistItem, Track } from "~/types";
 import { uniqueBy } from "~/utils/arrayUtils";
 
@@ -9,11 +9,7 @@ const useTracksByAlbumList = ({
 }: {
   playlistItems: PlaylistItem[];
 }) => {
-  const [tracksForAlbums, setTracksForAlbums] = useState<[Album, Track[]][]>(
-    [],
-  );
-
-  useEffect(() => {
+  const tracksForAlbums = useMemo(() => {
     const albums = uniqueBy(
       playlistItems.map((item) => item.track.album),
       (album) => album.id ?? album.name,
@@ -44,7 +40,7 @@ const useTracksByAlbumList = ({
       return tracks2.length - tracks1.length;
     });
 
-    setTracksForAlbums(map);
+    return map;
   }, [playlistItems]);
 
   return { tracksForAlbums };
