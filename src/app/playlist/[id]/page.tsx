@@ -5,12 +5,22 @@ import usePlaylistPage from "./usePlaylistPage";
 import TracksByAlbumList from "~/components/TracksByAlbumList";
 
 const PlaylistStatsPage = ({ params }: { params: { id: string } }) => {
-  const { playlistItems } = usePlaylistPage({ id: params.id });
+  const { playlistItems, isLoading, error } = usePlaylistPage({
+    id: params.id,
+  });
 
   return (
     <div className="flex flex-wrap justify-center gap-16">
-      <TracksByArtistList playlistItems={playlistItems} />
-      <TracksByAlbumList playlistItems={playlistItems} />
+      {isLoading && <p>Loading</p>}
+
+      {error && <p>{error.message}</p>}
+
+      {playlistItems && (
+        <>
+          <TracksByArtistList playlistItems={playlistItems} />
+          <TracksByAlbumList playlistItems={playlistItems} />
+        </>
+      )}
     </div>
   );
 };
