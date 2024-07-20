@@ -1,20 +1,27 @@
-import { type SpotifyTokenResponse } from "~/types";
+import type { SpotifyTokenResponse } from "~/types";
 
 export const getCurrentToken = () => {
-  // TODO: access token in cookies with expiration
+  const expiresString = localStorage.getItem("expires");
+  const expiresTime = expiresString ? parseInt(expiresString) : null;
+
   return {
     access_token: localStorage.getItem("access_token"),
     refresh_token: localStorage.getItem("refresh_token"),
-    refresh_in: localStorage.getItem("refresh_in"),
+    expiresTime,
   };
 };
 
-export const saveToken = (tokenResponse: SpotifyTokenResponse) => {
-  const { access_token, refresh_token, expires_in } = tokenResponse;
+export const saveToken = ({
+  access_token,
+  refresh_token,
+  expires_in,
+}: SpotifyTokenResponse) => {
+  const now = new Date();
+  const expires = new Date(now.getTime() + expires_in);
 
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("refresh_token", refresh_token);
-  localStorage.setItem("expires_in", `${expires_in}`);
+  localStorage.setItem("expires", expires.getTime().toString());
 };
 
 export const saveCodeVerifier = (codeVerifier: string) => {

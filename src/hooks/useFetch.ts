@@ -18,9 +18,9 @@ const useFetch = () => {
     url: string | URL,
     options?: RequestInit | null,
   ) => {
-    const { access_token } = getCurrentToken();
+    const { access_token, expiresTime } = getCurrentToken();
 
-    if (!access_token) {
+    if (!access_token || !expiresTime || Date.now() > expiresTime) {
       router.push(loginUrl);
       return null;
     }
