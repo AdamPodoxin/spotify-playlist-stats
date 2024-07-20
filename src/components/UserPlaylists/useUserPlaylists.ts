@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useFetch from "~/hooks/useFetch";
 
 type UserPlaylist = {
@@ -14,29 +14,15 @@ type UserPlaylist = {
 const useUserPlaylists = () => {
   const { fetchAllPagesAuthenticated } = useFetch();
 
-  const [userPlaylists, setUserPlaylists] = useState<UserPlaylist[]>([]);
+  const { isPending, isFetching, data, error } = useQuery({
+    queryKey: ["user", "playlists"],
+    queryFn: async () =>
+      await fetchAllPagesAuthenticated<UserPlaylist>(
+        "https://api.spotify.com/v1/me/playlists",
+      ),
+  });
 
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      const getUserPlaylists = async () => {
-        try {
-          const data = await fetchAllPagesAuthenticated<UserPlaylist>(
-            "https://api.spotify.com/v1/me/playlists",
-          );
-
-          setUserPlaylists(data);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      void getUserPlaylists();
-    };
-
-    void fetchPlaylists();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  return { userPlaylists };
+  return { isLoading: isPending || isFetching, userPlaylists: data, error };
 };
 
 export default useUserPlaylists;
