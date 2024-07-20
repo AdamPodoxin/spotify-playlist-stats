@@ -21,37 +21,38 @@ const HomePage = () => {
     }
   }, []);
 
-  if (!token) {
-    return (
-      <div>
+  return (
+    <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+      {!token && (
         <button
           className="rounded-lg bg-[#0b0b16] px-8 py-4 text-2xl"
           onClick={() => router.push(`${baseUrl}/login`)}
         >
           Login
         </button>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-        Spotify Playlist Stats
-      </h1>
-      <button
-        className="rounded-lg bg-[#0b0b16] px-4 py-2 text-lg"
-        onClick={() => {
-          clearLocalStorage();
-          location.reload();
-        }}
-      >
-        Logout
-      </button>
-      <PlaylistSearch />
-      <p className="text-xl text-[#c2c1cf]">or choose one of your playlists</p>
-      <UserPlaylists />
-    </>
+      )}
+      {token && (
+        <>
+          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+            Spotify Playlist Stats
+          </h1>
+          <button
+            className="rounded-lg bg-[#0b0b16] px-4 py-2 text-lg"
+            onClick={() => {
+              clearLocalStorage();
+              location.reload();
+            }}
+          >
+            Logout
+          </button>
+          <PlaylistSearch />
+          <p className="text-xl text-[#c2c1cf]">
+            or choose one of your playlists
+          </p>
+          <UserPlaylists />
+        </>
+      )}
+    </div>
   );
 };
 
