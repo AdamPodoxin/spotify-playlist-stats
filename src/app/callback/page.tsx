@@ -43,7 +43,13 @@ const Callback = () => {
 
       if (token) {
         saveToken(token);
-        router.push(baseUrl);
+
+        const returnToRouteAfterAuth = localStorage.getItem(
+          "returnToRouteAfterAuth",
+        );
+        localStorage.removeItem("returnToRouteAfterAuth");
+
+        router.push(returnToRouteAfterAuth ?? baseUrl);
       }
     };
 

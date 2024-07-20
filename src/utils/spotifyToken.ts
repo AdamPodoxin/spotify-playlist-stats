@@ -17,7 +17,7 @@ export const saveToken = ({
   expires_in,
 }: SpotifyTokenResponse) => {
   const now = new Date();
-  const expires = new Date(now.getTime() + expires_in);
+  const expires = new Date(now.getTime() + expires_in * 1000);
 
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("refresh_token", refresh_token);

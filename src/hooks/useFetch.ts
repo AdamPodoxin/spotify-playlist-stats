@@ -14,13 +14,20 @@ const loginUrl = `${env.NEXT_PUBLIC_BASE_URL}/login`;
 const useFetch = () => {
   const router = useRouter();
 
+  const saveCurrentRoute = () => {
+    const currentRoute = location.href.replace(location.origin, "");
+    localStorage.setItem("returnToRouteAfterAuth", currentRoute);
+  };
+
   const fetchAuthenticated = async <T>(
     url: string | URL,
     options?: RequestInit | null,
   ) => {
     const { access_token, expiresTime } = getCurrentToken();
 
-    if (!access_token || !expiresTime || Date.now() > expiresTime) {
+    if (!access_token || (expiresTime && Date.now() > expiresTime)) {
+      saveCurrentRoute();
+
       router.push(loginUrl);
       return null;
     }
@@ -36,6 +43,8 @@ const useFetch = () => {
     const response = await fetch(url, authenticatedOptions);
 
     if (response.status === 401) {
+      saveCurrentRoute();
+
       router.push(loginUrl);
       return null;
     }

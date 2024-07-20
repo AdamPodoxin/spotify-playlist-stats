@@ -96,7 +96,13 @@ const LoginPage = () => {
 
       if (newRefreshToken) {
         saveToken(newRefreshToken);
-        router.push(baseUrl);
+
+        const returnToRouteAfterAuth = localStorage.getItem(
+          "returnToRouteAfterAuth",
+        );
+        localStorage.removeItem("returnToRouteAfterAuth");
+
+        router.push(returnToRouteAfterAuth ?? baseUrl);
       }
     };
 
