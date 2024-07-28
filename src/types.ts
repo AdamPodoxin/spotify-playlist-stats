@@ -10,9 +10,14 @@ export type Album = {
   external_urls: {
     spotify?: string | null;
   };
+  images: {
+    url: string;
+    height?: number | null;
+    width?: number | null;
+  }[];
 };
 
-export type Artist = {
+export type SimplifiedArtist = {
   id?: string | null;
   name: string;
   external_urls: {
@@ -23,7 +28,7 @@ export type Artist = {
 export type Track = {
   id?: string | null;
   album: Album;
-  artists: Artist[];
+  artists: SimplifiedArtist[];
   name: string;
   external_urls: {
     spotify?: string | null;

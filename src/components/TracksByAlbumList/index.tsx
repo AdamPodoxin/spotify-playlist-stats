@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { PlaylistItem } from "~/types";
 import useTracksByAlbumList from "./useTracksByAlbumList";
 
@@ -13,7 +14,7 @@ const TracksByAlbumList = ({
   return (
     <div>
       <span className="my-4 text-2xl">Albums:</span>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         {tracksForAlbums.map(([album, tracks]) => {
           const albumName = !!album.name ? album.name : "(no album)";
           const albumUrl = album.external_urls.spotify;
@@ -22,22 +23,32 @@ const TracksByAlbumList = ({
 
           return (
             <div key={album.id ?? album.name} className="flex flex-col">
-              {albumUrl && (
-                <a
-                  href={albumUrl}
-                  target="_blank"
-                  referrerPolicy="no-referrer"
-                  className="my-1 w-min text-nowrap bg-slate-50/10 text-xl hover:bg-slate-50/20"
-                >
-                  {albumName}
-                </a>
-              )}
+              <span className="flex items-end gap-1">
+                {!!album.images.length && album.images[0] && (
+                  <Image
+                    src={album.images[0].url}
+                    alt={"Album image"}
+                    width={100}
+                    height={100}
+                  />
+                )}
+                {albumUrl && (
+                  <a
+                    href={albumUrl}
+                    target="_blank"
+                    referrerPolicy="no-referrer"
+                    className="w-min text-nowrap bg-slate-50/10 text-xl hover:bg-slate-50/20"
+                  >
+                    {albumName}
+                  </a>
+                )}
 
-              {!albumUrl && (
-                <span className="my-1 w-min text-nowrap text-xl">
-                  {albumName}
-                </span>
-              )}
+                {!albumUrl && (
+                  <span className="my-1 w-min text-nowrap text-xl">
+                    {albumName}
+                  </span>
+                )}
+              </span>
 
               <span className="mb-2 w-min text-nowrap text-lg">
                 {tracks.length} {tracksString}

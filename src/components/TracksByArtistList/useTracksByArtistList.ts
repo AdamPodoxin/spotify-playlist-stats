@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import type { Artist, PlaylistItem, Track } from "~/types";
+import type { SimplifiedArtist, PlaylistItem, Track } from "~/types";
 import { uniqueBy } from "~/utils/arrayUtils";
 
 const useTracksByArtistList = ({
@@ -15,7 +15,7 @@ const useTracksByArtistList = ({
       (artist) => artist.id ?? artist.name,
     );
 
-    const map: [Artist, Track[]][] = [];
+    const map: [SimplifiedArtist, Track[]][] = [];
 
     artists.forEach((artist) => {
       const tracks = playlistItems
